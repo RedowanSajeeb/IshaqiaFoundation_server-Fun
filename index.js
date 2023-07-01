@@ -23,13 +23,13 @@ const ishaqiaFunCollection = client.db("ishaqiaFun").collection("Events");
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
+    // await client.connect();
 
 
 
  app.get('/events', async (req, res) => {
     
- const result = await ishaqiaFunCollection.findOne();
+ const result = await ishaqiaFunCollection.find().toArray();
  res.send(result)
  })
 
