@@ -4,7 +4,7 @@ const cors = require("cors");
 const port = process.env.PORT || 5000;
 
 app.use(cors());
-
+app.use(express.json());
 
 
 const { MongoClient, ServerApiVersion } = require("mongodb");
@@ -19,7 +19,7 @@ const client = new MongoClient(uri, {
     deprecationErrors: true,
   },
 });
-const ishaqiaFunCollection = client.db("ishaqiaFun").collection("StoreDB");
+const ishaqiaFunCollection = client.db("ishaqiaFun").collection("Events");
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
@@ -27,6 +27,18 @@ async function run() {
 
 
 
+ app.get('/events', async (req, res) => {
+    
+ const result = await ishaqiaFunCollection.findOne();
+ res.send(result)
+ })
+
+  app.post("/events", async (req, res) => {
+    const eventInfo = req.body;
+
+    const result = await ishaqiaFunCollection.insertOne(eventInfo);
+    res.send(result);
+  });
 
 
     // Send a ping to confirm a successful connection
